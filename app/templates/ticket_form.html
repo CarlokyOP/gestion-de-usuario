@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Nuevo Ticket</h1>
+
+<form method="POST" action="/tickets/create">
+    <p>
+        <label>Título</label><br>
+        <input type="text" name="titulo" required>
+    </p>
+
+    <p>
+        <label>Descripción</label><br>
+        <textarea name="descripcion" required></textarea>
+    </p>
+
+    <p>
+        <label>Prioridad</label><br>
+        <select name="prioridad">
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
+        </select>
+    </p>
+
+    <button type="submit">Crear ticket</button>
+</form>
+
+<p>
+    <a href="/tickets/">← Volver al listado</a>
+</p>
+{% endblock %}

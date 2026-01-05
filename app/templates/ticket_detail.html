@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ ticket.titulo }}</h1>
+
+<p>
+    <strong>Estado:</strong> {{ ticket.estado }}
+</p>
+
+<p>
+    <strong>Prioridad:</strong> {{ ticket.prioridad }}
+</p>
+
+<p><strong>Descripción:</strong></p>
+<p>{{ ticket.descripcion }}</p>
+
+<hr>
+
+<h3>Cambiar estado</h3>
+
+{% if ticket.estado != 'Abierto' %}
+    <a href="/tickets/{{ ticket.id }}/status/Abierto">🔄 Reabrir</a>
+{% endif %}
+
+{% if ticket.estado != 'En progreso' %}
+    <a href="/tickets/{{ ticket.id }}/status/En progreso">🟡 En progreso</a>
+{% endif %}
+
+{% if ticket.estado != 'Cerrado' %}
+    <a href="/tickets/{{ ticket.id }}/status/Cerrado">✅ Cerrar</a>
+{% endif %}
+
+<hr>
+
+<a href="/tickets/">← Volver al listado</a>
+{% endblock %}

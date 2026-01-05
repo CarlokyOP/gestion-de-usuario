@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    <a href="/tickets/new">➕ Crear nuevo ticket</a>
+</p>
+
+<h1>Listado de Tickets</h1>
+
+{% if tickets %}
+    <ul>
+    {% for ticket in tickets %}
+        <li class="ticket 
+    estado-{{ ticket.estado | lower | replace(' ', '-') }} 
+    prioridad-{{ ticket.prioridad | lower }}">
+    
+    <a href="/tickets/{{ ticket.id }}">
+        <strong>{{ ticket.titulo }}</strong>
+    </a>
+    — {{ ticket.estado }} — {{ ticket.prioridad }}
+</li>
+
+</li>
+
+
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay tickets aún.</p>
+{% endif %}
+
+{% endblock %}
