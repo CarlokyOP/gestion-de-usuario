@@ -1,0 +1,5 @@
+instance/helpdesk.db
+__pycache__/
+instance/
+.env
+.vscode/
