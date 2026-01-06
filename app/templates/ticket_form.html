@@ -1,32 +1,159 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Nuevo Ticket</h1>
+<div class="container">
 
-<form method="POST" action="/tickets/create">
-    <p>
-        <label>Título</label><br>
-        <input type="text" name="titulo" required>
-    </p>
+    <div class="form-card">
+        <h1>
+            {{ "Editar Ticket" if ticket else "Nuevo Ticket" }}
+        </h1>
 
-    <p>
-        <label>Descripción</label><br>
-        <textarea name="descripcion" required></textarea>
-    </p>
+        <form method="POST">
 
-    <p>
-        <label>Prioridad</label><br>
-        <select name="prioridad">
-            <option value="Baja">Baja</option>
-            <option value="Media">Media</option>
-            <option value="Alta">Alta</option>
-        </select>
-    </p>
+            <!-- TÍTULO -->
+            <div class="form-group">
+                <label for="titulo">Título</label>
+                <input
+                    type="text"
+                    id="titulo"
+                    name="titulo"
+                    value="{{ ticket.titulo if ticket else '' }}"
+                    required
+                >
+            </div>
 
-    <button type="submit">Crear ticket</button>
-</form>
+            <!-- DESCRIPCIÓN -->
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    required
+                >{{ ticket.descripcion if ticket else '' }}</textarea>
+            </div>
 
-<p>
-    <a href="/tickets/">← Volver al listado</a>
-</p>
+            <!-- FECHA Y HORA -->
+            <div class="form-group">
+                <label>Fecha y hora</label>
+                <div style="display:flex; gap:12px;">
+                    <input
+                        type="date"
+                        name="fecha"
+                        value="{{ ticket.fecha_creacion.strftime('%Y-%m-%d') if ticket else '' }}"
+                        required
+                    >
+                    <input
+                        type="time"
+                        name="hora"
+                        value="{{ ticket.fecha_creacion.strftime('%H:%M') if ticket else '' }}"
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- ESTADO -->
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado">
+                    {% for e in ["Nuevo", "Abierto", "Cerrado"] %}
+                        <option value="{{ e }}"
+                            {% if ticket and ticket.estado == e %}selected{% endif %}>
+                            {{ e }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- PRIORIDAD -->
+            <div class="form-group">
+                <label for="prioridad">Prioridad</label>
+                <select id="prioridad" name="prioridad">
+                    {% for p in ["Alta", "Media", "Baja"] %}
+                        <option value="{{ p }}"
+                            {% if ticket and ticket.prioridad == p %}selected{% endif %}>
+                            {{ p }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- CLIENTE -->
+            <div class="form-group">
+                <label for="nombre_cliente">Nombre del cliente</label>
+                <input
+                    type="text"
+                    id="nombre_cliente"
+                    name="nombre_cliente"
+                    value="{{ ticket.nombre_cliente if ticket else '' }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="telefono_cliente">Teléfono</label>
+                <input
+                    type="text"
+                    id="telefono_cliente"
+                    name="telefono_cliente"
+                    value="{{ ticket.telefono_cliente if ticket else '' }}"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="correo_cliente">Correo electrónico</label>
+                <input
+                    type="email"
+                    id="correo_cliente"
+                    name="correo_cliente"
+                    value="{{ ticket.correo_cliente if ticket else '' }}"
+                >
+            </div>
+
+            <!-- TIPO PROBLEMA -->
+            <div class="form-group">
+                <label for="tipo_problema">Tipo de problema</label>
+                <select id="tipo_problema" name="tipo_problema">
+                    {% for t in ["Hardware", "Software", "Red", "Otro"] %}
+                        <option value="{{ t }}"
+                            {% if ticket and ticket.tipo_problema == t %}selected{% endif %}>
+                            {{ t }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- FUENTE TICKET -->
+            <div class="form-group">
+                <label>Fuente del ticket</label>
+                <div class="checkbox-group">
+                    {% for f in ["Llamada telefónica", "Correo electrónico", "WebChat", "Presencial"] %}
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="fuente_ticket"
+                                value="{{ f }}"
+                                {% if ticket and f in ticket.fuente_ticket %}checked{% endif %}
+                            >
+                            {{ f }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">
+                    {{ "Guardar cambios" if ticket else "Crear ticket" }}
+                </button>
+
+                <a href="{{ url_for('ticket.list_tickets') }}"
+                   class="btn btn-back">
+                    ← Volver al listado
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
 {% endblock %}
