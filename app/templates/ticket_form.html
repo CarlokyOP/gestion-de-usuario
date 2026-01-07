@@ -7,6 +7,7 @@
     </h1>
 
     <form method="POST">
+
         <!-- Título -->
         <label>Título</label>
         <input type="text" name="titulo" required
@@ -19,12 +20,10 @@
         <!-- Fecha y hora -->
         <label>Fecha y hora</label>
         <div style="display:flex; gap:10px;">
-            <input type="date" name="fecha"
-                   value="{{ ticket.fecha_creacion.strftime('%Y-%m-%d') if ticket else '' }}"
-                   required>
-            <input type="time" name="hora"
-                   value="{{ ticket.fecha_creacion.strftime('%H:%M') if ticket else '' }}"
-                   required>
+            <input type="date" name="fecha" required
+                   value="{{ ticket.fecha_creacion.strftime('%Y-%m-%d') if ticket else '' }}">
+            <input type="time" name="hora" required
+                   value="{{ ticket.fecha_creacion.strftime('%H:%M') if ticket else '' }}">
         </div>
 
         <!-- Estado -->
@@ -73,17 +72,16 @@
             {% endfor %}
         </select>
 
-        <!-- Fuente -->
+        <!-- Fuente del ticket (ESTILO CORRECTO) -->
         <label>Fuente del ticket</label>
-        <div class="checkbox-group">
+        <select name="fuente_ticket" required>
             {% for f in ['Llamada','Correo','WebChat','Presencial'] %}
-            <label>
-                <input type="checkbox" name="fuente_ticket" value="{{ f }}"
-                    {% if ticket and f in ticket.fuente_ticket %}checked{% endif %}>
+            <option value="{{ f }}"
+                {% if ticket and ticket.fuente_ticket == f %}selected{% endif %}>
                 {{ f }}
-            </label>
+            </option>
             {% endfor %}
-        </div>
+        </select>
 
         <!-- Botones -->
         <div style="margin-top:20px; display:flex; gap:10px;">
@@ -94,7 +92,7 @@
                 ← Volver al listado
             </a>
         </div>
+
     </form>
 </div>
 {% endblock %}
-
