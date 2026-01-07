@@ -40,7 +40,8 @@ def create_ticket():
 
         # Tipo de problema (checkbox múltiple)
         tipos = request.form.getlist("tipo_problema")
-        tipo_problema = ", ".join(tipos)
+ticket.tipo_problema = ", ".join(tipos)
+
 
         ticket = Ticket(
             titulo=request.form.get("titulo"),
