@@ -2,116 +2,98 @@
 
 {% block content %}
 <div class="container">
-    <h1>
-        {% if ticket %}
-            Editar Ticket
-        {% else %}
-            Crear Ticket
-        {% endif %}
-    </h1>
+    <h1>{{ "Editar Ticket" if ticket else "Crear Ticket" }}</h1>
 
     <form method="POST">
-
-        <!-- TÍTULO -->
+        <!-- Título -->
         <div class="form-group">
-            <label>Título</label>
-            <input type="text"
-                   name="titulo"
-                   class="form-control"
-                   required
-                   value="{{ ticket.titulo if ticket else '' }}">
+            <label for="titulo">Título</label>
+            <input type="text" name="titulo" id="titulo"
+                   value="{{ ticket.titulo if ticket else '' }}"
+                   required>
         </div>
 
-        <!-- DESCRIPCIÓN -->
+        <!-- Descripción -->
         <div class="form-group">
-            <label>Descripción</label>
-            <textarea name="descripcion"
-                      class="form-control"
-                      required>{{ ticket.descripcion if ticket else '' }}</textarea>
+            <label for="descripcion">Descripción</label>
+            <textarea name="descripcion" id="descripcion" required>{{ ticket.descripcion if ticket else '' }}</textarea>
         </div>
 
-        <!-- ESTADO (SELECT) -->
+        <!-- Estado -->
         <div class="form-group">
-            <label>Estado</label>
-            <select name="estado" class="form-control" required>
-                <option value="Nuevo" {% if ticket and ticket.estado == 'Nuevo' %}selected{% endif %}>Nuevo</option>
-                <option value="Apertura" {% if ticket and ticket.estado == 'Apertura' %}selected{% endif %}>Apertura</option>
-                <option value="Resuelto" {% if ticket and ticket.estado == 'Resuelto' %}selected{% endif %}>Resuelto</option>
-                <option value="Cierre" {% if ticket and ticket.estado == 'Cierre' %}selected{% endif %}>Cierre</option>
-                <option value="Escalado" {% if ticket and ticket.estado == 'Escalado' %}selected{% endif %}>Escalado</option>
+            <label for="estado">Estado</label>
+            <select name="estado" id="estado" required>
+                {% for e in ['Nuevo', 'Apertura', 'Resuelto', 'Cierre', 'Escalado'] %}
+                    <option value="{{ e }}"
+                        {% if ticket and ticket.estado == e %}selected{% endif %}>
+                        {{ e }}
+                    </option>
+                {% endfor %}
             </select>
         </div>
 
-        <!-- PRIORIDAD -->
+        <!-- Prioridad -->
         <div class="form-group">
-            <label>Prioridad</label>
-            <select name="prioridad" class="form-control" required>
-                <option value="Baja" {% if ticket and ticket.prioridad == 'Baja' %}selected{% endif %}>Baja</option>
-                <option value="Media" {% if ticket and ticket.prioridad == 'Media' %}selected{% endif %}>Media</option>
-                <option value="Alta" {% if ticket and ticket.prioridad == 'Alta' %}selected{% endif %}>Alta</option>
+            <label for="prioridad">Prioridad</label>
+            <select name="prioridad" id="prioridad" required>
+                {% for p in ['Baja', 'Media', 'Alta'] %}
+                    <option value="{{ p }}"
+                        {% if ticket and ticket.prioridad == p %}selected{% endif %}>
+                        {{ p }}
+                    </option>
+                {% endfor %}
             </select>
         </div>
 
-        <!-- CLIENTE -->
+        <!-- Cliente -->
         <div class="form-group">
-            <label>Nombre Cliente</label>
-            <input type="text"
-                   name="nombre_cliente"
-                   class="form-control"
-                   required
-                   value="{{ ticket.nombre_cliente if ticket else '' }}">
+            <label for="nombre_cliente">Cliente</label>
+            <input type="text" name="nombre_cliente" id="nombre_cliente"
+                   value="{{ ticket.nombre_cliente if ticket else '' }}"
+                   required>
         </div>
 
+        <!-- Teléfono -->
         <div class="form-group">
-            <label>Teléfono Cliente</label>
-            <input type="text"
-                   name="telefono_cliente"
-                   class="form-control"
-                   required
-                   value="{{ ticket.telefono_cliente if ticket else '' }}">
+            <label for="telefono_cliente">Teléfono</label>
+            <input type="text" name="telefono_cliente" id="telefono_cliente"
+                   value="{{ ticket.telefono_cliente if ticket else '' }}"
+                   required>
         </div>
 
+        <!-- Correo -->
         <div class="form-group">
-            <label>Correo Cliente</label>
-            <input type="email"
-                   name="correo_cliente"
-                   class="form-control"
-                   required
-                   value="{{ ticket.correo_cliente if ticket else '' }}">
+            <label for="correo_cliente">Correo</label>
+            <input type="email" name="correo_cliente" id="correo_cliente"
+                   value="{{ ticket.correo_cliente if ticket else '' }}"
+                   required>
         </div>
 
-        <!-- CLASIFICACIÓN -->
+        <!-- Tipo de problema -->
         <div class="form-group">
-            <label>Tipo de Problema</label>
-            <select name="tipo_problema" class="form-control" required>
-                <option value="Hardware" {% if ticket and ticket.tipo_problema == 'Hardware' %}selected{% endif %}>Hardware</option>
-                <option value="Movil" {% if ticket and ticket.tipo_problema == 'Movil' %}selected{% endif %}>Móvil</option>
-                <option value="Red" {% if ticket and ticket.tipo_problema == 'Red' %}selected{% endif %}>Red</option>
-                <option value="Otro" {% if ticket and ticket.tipo_problema == 'Otro' %}selected{% endif %}>Otro</option>
+            <label for="tipo_problema">Tipo de problema</label>
+            <input type="text" name="tipo_problema" id="tipo_problema"
+                   value="{{ ticket.tipo_problema if ticket else '' }}"
+                   required>
+        </div>
+
+        <!-- Fuente -->
+        <div class="form-group">
+            <label for="fuente_ticket">Fuente</label>
+            <select name="fuente_ticket" id="fuente_ticket" required>
+                {% for f in ['Llamada', 'Correo', 'WebChat', 'Presencial'] %}
+                    <option value="{{ f }}"
+                        {% if ticket and ticket.fuente_ticket == f %}selected{% endif %}>
+                        {{ f }}
+                    </option>
+                {% endfor %}
             </select>
         </div>
 
-        <div class="form-group">
-            <label>Fuente del Ticket</label>
-            <select name="fuente_ticket" class="form-control" required>
-                <option value="Llamada" {% if ticket and ticket.fuente_ticket == 'Llamada' %}selected{% endif %}>Llamada</option>
-                <option value="Correo" {% if ticket and ticket.fuente_ticket == 'Correo' %}selected{% endif %}>Correo</option>
-                <option value="WebChat" {% if ticket and ticket.fuente_ticket == 'WebChat' %}selected{% endif %}>WebChat</option>
-                <option value="Presencial" {% if ticket and ticket.fuente_ticket == 'Presencial' %}selected{% endif %}>Presencial</option>
-            </select>
-        </div>
-
-        <!-- BOTONES -->
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">
-                {% if ticket %}Guardar cambios{% else %}Crear Ticket{% endif %}
-            </button>
-
-            <a href="{{ url_for('ticket.list_tickets') }}" class="btn btn-secondary">
-                Cancelar
-            </a>
-        </div>
-
+        <!-- Botón -->
+        <button type="submit" class="btn btn-primary">
+            {{ "Actualizar" if ticket else "Crear" }}
+        </button>
     </form>
 </div>
 {% endblock %}
