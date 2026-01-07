@@ -1,6 +1,6 @@
-/* =========================
+/* =====================================================
    BASE GENERAL
-========================= */
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -15,6 +15,7 @@ body {
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 h1, h2, h3 {
@@ -22,9 +23,9 @@ h1, h2, h3 {
     color: #4fc3ff;
 }
 
-/* =========================
-   CONTENEDOR PRINCIPAL
-========================= */
+/* =====================================================
+   CONTENEDOR
+===================================================== */
 
 .container {
     max-width: 1100px;
@@ -32,9 +33,9 @@ h1, h2, h3 {
     padding: 30px 20px 60px;
 }
 
-/* =========================
+/* =====================================================
    HEADER LISTADO
-========================= */
+===================================================== */
 
 .header-row {
     display: flex;
@@ -49,63 +50,41 @@ h1, h2, h3 {
     padding: 8px 14px;
     border-radius: 6px;
     font-weight: 600;
-    transition: background 0.2s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-primary:hover {
     background: #388bfd;
 }
 
-/* =========================
+/* =====================================================
    TARJETAS DE TICKETS
-========================= */
+===================================================== */
 
 .ticket-card {
-    position: relative;
     background: linear-gradient(135deg, #070b17, #050814);
     border-radius: 12px;
     padding: 20px 22px;
     margin-bottom: 22px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
-.ticket-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.8);
-}
-
-/* =========================
-   SOMBRAS POR PRIORIDAD
-   (ESTO ES LO IMPORTANTE)
-========================= */
 
 .ticket-alta {
-    box-shadow:
-        inset 4px 0 0 #e53935,
-        0 0 18px rgba(229, 57, 53, 0.35);
+    box-shadow: inset 4px 0 0 #e53935;
 }
 
 .ticket-media {
-    box-shadow:
-        inset 4px 0 0 #fbc02d,
-        0 0 18px rgba(251, 192, 45, 0.35);
+    box-shadow: inset 4px 0 0 #fbc02d;
 }
 
 .ticket-baja {
-    box-shadow:
-        inset 4px 0 0 #2ecc71,
-        0 0 18px rgba(46, 204, 113, 0.35);
+    box-shadow: inset 4px 0 0 #2ecc71;
 }
-
-/* =========================
-   CONTENIDO TICKET
-========================= */
 
 .ticket-title {
     font-size: 1.15rem;
     font-weight: 700;
-    color: #4fc3ff;
     margin-bottom: 10px;
 }
 
@@ -118,14 +97,11 @@ h1, h2, h3 {
     display: block;
 }
 
-/* =========================
-   BOTONES DE ACCIÓN
-========================= */
-
 .ticket-actions {
     margin-top: 14px;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -133,220 +109,32 @@ h1, h2, h3 {
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
-    cursor: pointer;
     border: none;
-}
-
-.btn-view {
-    background: #00bcd4;
-    color: #001018;
-}
-
-.btn-edit {
-    background: #fbc02d;
-    color: #1a1400;
-}
-
-.btn-delete {
-    background: #e53935;
-    color: #fff;
-}
-
-.btn-view:hover { background: #26c6da; }
-.btn-edit:hover { background: #ffd54f; }
-.btn-delete:hover { background: #ef5350; }
-
-/* =========================
-   FORMULARIOS (CREATE / EDIT)
-========================= */
-
-.form-card {
-    max-width: 720px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, #070b17, #050814);
-    padding: 28px;
-    border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.75);
-}
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-label {
-    display: block;
-    font-size: 0.85rem;
-    margin-bottom: 6px;
-    color: #9fdcff;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-    padding: 9px 10px;
-    border-radius: 6px;
-    border: 1px solid #1c2a44;
-    background: #020614;
-    color: #fff;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    outline: none;
-    border-color: #4fc3ff;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 90px;
-}
-
-/* =========================
-   CHECKBOX FUENTE TICKET
-========================= */
-
-.checkbox-group {
-    display: flex;
-    gap: 18px;
-    margin-top: 6px;
-}
-
-.checkbox-group label {
-    font-size: 0.85rem;
-    color: #e6e6e6;
-}
-
-/* =========================
-   FORM BOTONES
-========================= */
-
-.form-actions {
-    margin-top: 22px;
-    display: flex;
-    gap: 14px;
-}
-
-.btn-save {
-    background: #1f6feb;
-    color: #fff;
-}
-
-.btn-back {
-    background: #3a3f4b;
-    color: #fff;
-}
-
-.btn-save:hover { background: #388bfd; }
-.btn-back:hover { background: #525866; }
-
-/* =========================
-   DETALLE TICKET
-========================= */
-
-.ticket-detail {
-    max-width: 720px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, #070b17, #050814);
-    padding: 26px;
-    border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.75);
-}
-
-.ticket-detail p {
-    margin: 8px 0;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-    .container {
-        padding: 20px 14px;
-    }
-
-    .header-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .ticket-actions {
-        flex-wrap: wrap;
-    }
-}
-/* ===== FORMULARIOS ===== */
-
-form {
-    max-width: 900px;
-    margin: auto;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    margin-bottom: 6px;
-    font-weight: 600;
-}
-
-.form-row {
-    display: flex;
-    gap: 16px;
-}
-
-.form-row .form-group {
-    flex: 1;
-}
-
-.textarea-large {
-    min-height: 120px;
-    resize: vertical;
-}
-
-/* ===== BOTONES ===== */
-
-.form-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-.btn-primary {
-    background: #1e90ff;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 4px;
     cursor: pointer;
-    text-decoration: none;
 }
 
-.btn-secondary {
-    background: #444;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 4px;
-    text-decoration: none;
-}
+.btn-view { background: #00bcd4; color: #001018; }
+.btn-edit { background: #fbc02d; color: #1a1400; }
+.btn-delete { background: #e53935; color: #fff; }
+.btn-back { background: #3a3f4b; color: #fff; }
+
+/* =====================================================
+   FORMULARIOS
+===================================================== */
+
 .form-container {
     max-width: 800px;
     margin: auto;
 }
 
 .form-title {
-    color: #4fc3f7;
     margin-bottom: 20px;
 }
 
 .ticket-form label {
     margin-top: 15px;
-    font-weight: bold;
+    font-weight: 600;
+    color: #9fdcff;
 }
 
 .ticket-form input,
@@ -360,144 +148,133 @@ form {
     color: #fff;
 }
 
+.ticket-form textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
 .form-row {
     display: flex;
     gap: 15px;
+    margin-top: 10px;
 }
 
-.checkbox-group {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 5px;
+.form-row > div {
+    flex: 1;
 }
 
-.checkbox-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
 .section-title {
     margin-top: 30px;
     margin-bottom: 10px;
     font-size: 1.2rem;
-    color: #4fc3f7;
+    color: #4fc3ff;
     border-bottom: 1px solid #2c4c7c;
     padding-bottom: 5px;
 }
 
-.form-actions {
-    margin-top: 25px;
-    display: flex;
-    gap: 15px;
-}
-/* ===============================
-   CHECKBOX / RADIO – MOBILE FIX
-================================ */
+/* =====================================================
+   OPCIONES (RADIO / CHECKBOX)
+   Estado / Tipo problema / Fuente
+===================================================== */
 
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 24px;
-    margin-top: 8px;
-}
-
-.checkbox-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    white-space: nowrap;
-}
-
-/* 🔹 MOBILE */
-@media (max-width: 768px) {
-    .checkbox-group {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .checkbox-item {
-        width: 100%;
-        font-size: 16px;
-    }
-
-    .checkbox-item input {
-        transform: scale(1.2);
-    }
-}
-/* ===== SECCIONES ===== */
 .form-section {
     margin-bottom: 25px;
 }
 
-.section-title {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #9fd3ff;
-}
-
-/* ===== GRID RESPONSIVE ===== */
 .option-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px;
 }
 
-/* ===== ITEMS ===== */
 .option-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.05);
-    padding: 10px 12px;
-    border-radius: 8px;
+    gap: 10px;
+    background: rgba(255,255,255,0.06);
+    padding: 12px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.1s;
 }
 
 .option-item:hover {
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-1px);
 }
 
 .option-item input {
     accent-color: #2da8ff;
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 .option-item span {
     font-size: 14px;
 }
 
-/* ===== MOBILE AJUSTE ===== */
-@media (max-width: 600px) {
-    .option-grid {
-        grid-template-columns: 1fr 1fr;
+/* =====================================================
+   BOTONES FORMULARIO
+===================================================== */
+
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background: #444;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+
+/* =====================================================
+   DETALLE TICKET
+===================================================== */
+
+.ticket-detail {
+    max-width: 720px;
+    margin: auto;
+    background: linear-gradient(135deg, #070b17, #050814);
+    padding: 26px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.75);
+}
+
+.ticket-detail p {
+    margin: 8px 0;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .form-row {
+        flex-direction: column;
     }
 }
-/* ===== FIX MOBILE RADIO / CHECKBOX ===== */
 
-.option-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-}
-
-.option-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* En móvil forzamos 2 columnas */
 @media (max-width: 600px) {
+
     .option-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .option-item {
+        padding: 14px;
+    }
+
+    .option-item span {
+        font-size: 15px;
+    }
 }
-
-
-
-
-
