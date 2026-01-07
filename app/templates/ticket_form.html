@@ -87,15 +87,16 @@
 
 
         <label>Fuente del ticket</label>
-        <div class="checkbox-group">
-            {% for f in ["Llamada","Correo","WebChat","Presencial"] %}
-            <label class="checkbox-item">
-                <input type="checkbox" name="fuente_ticket" value="{{ f }}"
-                {% if ticket and f in (ticket.fuente_ticket or '') %}checked{% endif %}>
-                {{ f }}
-            </label>
-            {% endfor %}
-        </div>
+<div class="checkbox-group">
+    {% for f in ["Llamada", "Correo", "WebChat", "Presencial"] %}
+    <label class="checkbox-item">
+        <input type="checkbox" name="fuente_ticket" value="{{ f }}"
+        {% if ticket and f in (ticket.fuente_ticket or "") %}checked{% endif %}>
+        {{ f }}
+    </label>
+    {% endfor %}
+</div>
+
 
         <!-- ================= SOPORTE ================= -->
         <h2 class="section-title">Soporte técnico</h2>
