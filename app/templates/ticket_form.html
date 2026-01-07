@@ -2,158 +2,156 @@
 
 {% block content %}
 <div class="container">
+    <h1>
+        {% if ticket %}
+            Editar Ticket
+        {% else %}
+            Crear Ticket
+        {% endif %}
+    </h1>
 
-    <div class="form-card">
-        <h1>
-            {{ "Editar Ticket" if ticket else "Nuevo Ticket" }}
-        </h1>
+    <form method="POST">
+        <!-- Título -->
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                class="form-control"
+                required
+                value="{{ ticket.titulo if ticket else '' }}"
+            >
+        </div>
 
-        <form method="POST">
+        <!-- Descripción -->
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea
+                id="descripcion"
+                name="descripcion"
+                class="form-control"
+                required
+            >{{ ticket.descripcion if ticket else '' }}</textarea>
+        </div>
 
-            <!-- TÍTULO -->
-            <div class="form-group">
-                <label for="titulo">Título</label>
-                <input
-                    type="text"
-                    id="titulo"
-                    name="titulo"
-                    value="{{ ticket.titulo if ticket else '' }}"
-                    required
-                >
+        <!-- Estado -->
+        <div class="form-group">
+            <label>Estado:</label>
+
+            {% set estado_actual = ticket.estado if ticket else 'Nuevo' %}
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="radio" name="estado" value="Nuevo"
+                        {% if estado_actual == 'Nuevo' %}checked{% endif %}>
+                    Nuevo
+                </label>
+
+                <label>
+                    <input type="radio" name="estado" value="Apertura"
+                        {% if estado_actual == 'Apertura' %}checked{% endif %}>
+                    Apertura
+                </label>
+
+                <label>
+                    <input type="radio" name="estado" value="Resuelto"
+                        {% if estado_actual == 'Resuelto' %}checked{% endif %}>
+                    Resuelto
+                </label>
+
+                <label>
+                    <input type="radio" name="estado" value="Cierre"
+                        {% if estado_actual == 'Cierre' %}checked{% endif %}>
+                    Cierre
+                </label>
+
+                <label>
+                    <input type="radio" name="estado" value="Escalado"
+                        {% if estado_actual == 'Escalado' %}checked{% endif %}>
+                    Escalado
+                </label>
             </div>
+        </div>
 
-            <!-- DESCRIPCIÓN -->
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea
-                    id="descripcion"
-                    name="descripcion"
-                    required
-                >{{ ticket.descripcion if ticket else '' }}</textarea>
-            </div>
+        <!-- Prioridad -->
+        <div class="form-group">
+            <label for="prioridad">Prioridad</label>
+            <select id="prioridad" name="prioridad" class="form-control" required>
+                <option value="Baja" {% if ticket and ticket.prioridad == 'Baja' %}selected{% endif %}>Baja</option>
+                <option value="Media" {% if ticket and ticket.prioridad == 'Media' %}selected{% endif %}>Media</option>
+                <option value="Alta" {% if ticket and ticket.prioridad == 'Alta' %}selected{% endif %}>Alta</option>
+            </select>
+        </div>
 
-            <!-- FECHA Y HORA -->
-            <div class="form-group">
-                <label>Fecha y hora</label>
-                <div style="display:flex; gap:12px;">
-                    <input
-                        type="date"
-                        name="fecha"
-                        value="{{ ticket.fecha_creacion.strftime('%Y-%m-%d') if ticket else '' }}"
-                        required
-                    >
-                    <input
-                        type="time"
-                        name="hora"
-                        value="{{ ticket.fecha_creacion.strftime('%H:%M') if ticket else '' }}"
-                        required
-                    >
-                </div>
-            </div>
+        <!-- Cliente -->
+        <div class="form-group">
+            <label for="nombre_cliente">Nombre Cliente</label>
+            <input
+                type="text"
+                id="nombre_cliente"
+                name="nombre_cliente"
+                class="form-control"
+                required
+                value="{{ ticket.nombre_cliente if ticket else '' }}"
+            >
+        </div>
 
-            <!-- ESTADO -->
-            <div class="form-group">
-                <label for="estado">Estado</label>
-                <select id="estado" name="estado">
-                    {% for e in ["Nuevo", "Abierto", "Cerrado"] %}
-                        <option value="{{ e }}"
-                            {% if ticket and ticket.estado == e %}selected{% endif %}>
-                            {{ e }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="telefono_cliente">Teléfono</label>
+            <input
+                type="text"
+                id="telefono_cliente"
+                name="telefono_cliente"
+                class="form-control"
+                required
+                value="{{ ticket.telefono_cliente if ticket else '' }}"
+            >
+        </div>
 
-            <!-- PRIORIDAD -->
-            <div class="form-group">
-                <label for="prioridad">Prioridad</label>
-                <select id="prioridad" name="prioridad">
-                    {% for p in ["Alta", "Media", "Baja"] %}
-                        <option value="{{ p }}"
-                            {% if ticket and ticket.prioridad == p %}selected{% endif %}>
-                            {{ p }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="correo_cliente">Correo</label>
+            <input
+                type="email"
+                id="correo_cliente"
+                name="correo_cliente"
+                class="form-control"
+                required
+                value="{{ ticket.correo_cliente if ticket else '' }}"
+            >
+        </div>
 
-            <!-- CLIENTE -->
-            <div class="form-group">
-                <label for="nombre_cliente">Nombre del cliente</label>
-                <input
-                    type="text"
-                    id="nombre_cliente"
-                    name="nombre_cliente"
-                    value="{{ ticket.nombre_cliente if ticket else '' }}"
-                    required
-                >
-            </div>
+        <!-- Clasificación -->
+        <div class="form-group">
+            <label for="tipo_problema">Tipo de Problema</label>
+            <select id="tipo_problema" name="tipo_problema" class="form-control" required>
+                <option value="Hardware" {% if ticket and ticket.tipo_problema == 'Hardware' %}selected{% endif %}>Hardware</option>
+                <option value="Movil" {% if ticket and ticket.tipo_problema == 'Movil' %}selected{% endif %}>Móvil</option>
+                <option value="Red" {% if ticket and ticket.tipo_problema == 'Red' %}selected{% endif %}>Red</option>
+                <option value="Otro" {% if ticket and ticket.tipo_problema == 'Otro' %}selected{% endif %}>Otro</option>
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label for="telefono_cliente">Teléfono</label>
-                <input
-                    type="text"
-                    id="telefono_cliente"
-                    name="telefono_cliente"
-                    value="{{ ticket.telefono_cliente if ticket else '' }}"
-                >
-            </div>
+        <div class="form-group">
+            <label for="fuente_ticket">Fuente del Ticket</label>
+            <select id="fuente_ticket" name="fuente_ticket" class="form-control" required>
+                <option value="Llamada" {% if ticket and ticket.fuente_ticket == 'Llamada' %}selected{% endif %}>Llamada</option>
+                <option value="Correo" {% if ticket and ticket.fuente_ticket == 'Correo' %}selected{% endif %}>Correo</option>
+                <option value="WebChat" {% if ticket and ticket.fuente_ticket == 'WebChat' %}selected{% endif %}>WebChat</option>
+                <option value="Presencial" {% if ticket and ticket.fuente_ticket == 'Presencial' %}selected{% endif %}>Presencial</option>
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label for="correo_cliente">Correo electrónico</label>
-                <input
-                    type="email"
-                    id="correo_cliente"
-                    name="correo_cliente"
-                    value="{{ ticket.correo_cliente if ticket else '' }}"
-                >
-            </div>
+        <!-- Botones -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {% if ticket %}Guardar cambios{% else %}Crear ticket{% endif %}
+            </button>
 
-            <!-- TIPO PROBLEMA -->
-            <div class="form-group">
-                <label for="tipo_problema">Tipo de problema</label>
-                <select id="tipo_problema" name="tipo_problema">
-                    {% for t in ["Hardware", "Software", "Red", "Otro"] %}
-                        <option value="{{ t }}"
-                            {% if ticket and ticket.tipo_problema == t %}selected{% endif %}>
-                            {{ t }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <!-- FUENTE TICKET -->
-            <div class="form-group">
-                <label>Fuente del ticket</label>
-                <div class="checkbox-group">
-                    {% for f in ["Llamada telefónica", "Correo electrónico", "WebChat", "Presencial"] %}
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="fuente_ticket"
-                                value="{{ f }}"
-                                {% if ticket and f in ticket.fuente_ticket %}checked{% endif %}
-                            >
-                            {{ f }}
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- BOTONES -->
-            <div class="form-actions">
-                <button type="submit" class="btn btn-save">
-                    {{ "Guardar cambios" if ticket else "Crear ticket" }}
-                </button>
-
-                <a href="{{ url_for('ticket.list_tickets') }}"
-                   class="btn btn-back">
-                    ← Volver al listado
-                </a>
-            </div>
-
-        </form>
-    </div>
-
+            <a href="{{ url_for('ticket.list_tickets') }}" class="btn btn-secondary">
+                Cancelar
+            </a>
+        </div>
+    </form>
 </div>
 {% endblock %}
