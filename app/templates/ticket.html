@@ -1,68 +1,65 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container">
 
+<script>
+    // Auto refresh cada 10 segundos
+    setTimeout(() => {
+        window.location.reload();
+    }, 10000);
+</script>
+
+<div class="container">
     <div class="header-row">
         <h1>Listado de Tickets</h1>
-        <a href="{{ url_for('ticket.create_ticket') }}" class="btn btn-primary">
+        <a href="{{ url_for('ticket.create_ticket') }}" class="btn-primary">
             + Crear ticket
         </a>
     </div>
 
     {% if tickets %}
         {% for t in tickets %}
-        <div class="ticket-card
-            {% if t.prioridad == 'Alta' %}ticket-alta
-            {% elif t.prioridad == 'Media' %}ticket-media
-            {% else %}ticket-baja{% endif %}">
+            <div class="ticket-card
+                {% if t.prioridad == 'Alta' %}ticket-alta
+                {% elif t.prioridad == 'Media' %}ticket-media
+                {% else %}ticket-baja{% endif %}">
 
-            <div class="ticket-title">
-                {{ t.titulo }}
+                <div class="ticket-title">
+                    {{ t.titulo }}
+                </div>
+
+                <div class="ticket-meta">
+                    <span><strong>Estado:</strong> {{ t.estado }}</span>
+                    <span><strong>Prioridad:</strong> {{ t.prioridad }}</span>
+                    <span><strong>Cliente:</strong> {{ t.nombre_cliente }}</span>
+
+                    {% if t.fecha_creacion %}
+                        <span><strong>Fecha:</strong>
+                            {{ t.fecha_creacion.strftime("%d-%m-%Y %H:%M") }}
+                        </span>
+                    {% else %}
+                        <span><strong>Fecha:</strong> No definida</span>
+                    {% endif %}
+                </div>
+
+                <div class="ticket-actions">
+                    <a href="{{ url_for('ticket.ticket_detail', ticket_id=t.id) }}"
+                       class="btn btn-view">Ver</a>
+
+                    <a href="{{ url_for('ticket.edit_ticket', ticket_id=t.id) }}"
+                       class="btn btn-edit">Editar</a>
+
+                    <form method="POST"
+                          action="{{ url_for('ticket.delete_ticket', ticket_id=t.id) }}"
+                          style="display:inline;"
+                          onsubmit="return confirm('¿Eliminar este ticket?');">
+                        <button type="submit" class="btn btn-delete">Eliminar</button>
+                    </form>
+                </div>
             </div>
-
-            <div class="ticket-meta">
-                <span><strong>Estado:</strong> {{ t.estado }}</span>
-                <span><strong>Prioridad:</strong> {{ t.prioridad }}</span>
-                <span><strong>Cliente:</strong> {{ t.nombre_cliente }}</span>
-                <span>
-                    <strong>Fecha:</strong>
-                    {{ t.fecha_creacion.strftime('%d-%m-%Y %H:%M') }}
-                </span>
-            </div>
-
-            <div class="ticket-actions">
-                <a href="{{ url_for('ticket.ticket_detail', ticket_id=t.id) }}"
-                   class="btn btn-view">
-                    Ver
-                </a>
-
-                <a href="{{ url_for('ticket.edit_ticket', ticket_id=t.id) }}"
-                   class="btn btn-edit">
-                    Editar
-                </a>
-
-                <form action="{{ url_for('ticket.delete_ticket', ticket_id=t.id) }}"
-                      method="POST"
-                      style="display:inline;"
-                      onsubmit="return confirm('¿Eliminar este ticket?');">
-                    <button type="submit" class="btn btn-delete">
-                        Eliminar
-                    </button>
-                </form>
-            </div>
-        </div>
         {% endfor %}
     {% else %}
         <p>No hay tickets registrados.</p>
     {% endif %}
-
 </div>
 
-<!-- 🔁 AUTO REFRESH CADA 10 SEGUNDOS -->
-<script>
-    setInterval(() => {
-        window.location.reload();
-    }, 10000);
-</script>
 {% endblock %}
