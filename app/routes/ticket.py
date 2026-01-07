@@ -44,4 +44,3 @@ def create_ticket():
         return redirect(url_for("ticket.list_tickets"))
 
     return render_template("ticket_form.html", ticket=None)
-
