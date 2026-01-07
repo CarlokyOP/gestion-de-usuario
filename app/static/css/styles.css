@@ -377,10 +377,20 @@ form {
     align-items: center;
     gap: 5px;
 }
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #4fc3f7;
+    border-bottom: 1px solid #2c4c7c;
+    padding-bottom: 5px;
+}
 
 .form-actions {
     margin-top: 25px;
     display: flex;
     gap: 15px;
 }
+
+
 
