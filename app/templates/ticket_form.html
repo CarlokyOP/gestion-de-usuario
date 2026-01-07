@@ -75,14 +75,15 @@
 
         <label>Tipo de problema</label>
 <div class="checkbox-group">
-    {% for p in ["Hardware","Software","Red","Otro"] %}
+    {% for p in ["Hardware", "Software", "Red", "Otro"] %}
     <label class="checkbox-item">
-        <input type="checkbox" name="tipo_problema" value="{{ p }}"
-        {% if ticket and p in (ticket.tipo_problema or '') %}checked{% endif %}>
+        <input type="radio" name="tipo_problema" value="{{ p }}"
+        {% if ticket and ticket.tipo_problema == p %}checked{% endif %}>
         {{ p }}
     </label>
     {% endfor %}
 </div>
+
 
 
         <label>Fuente del ticket</label>
