@@ -118,6 +118,51 @@
             </button>
             <a href="{{ url_for('ticket.list_tickets') }}" class="btn-secondary">Volver</a>
         </div>
+        <div class="form-section">
+    <label class="section-title">Tipo de problema</label>
+    <div class="option-grid">
+        {% for p in ["Hardware", "Software", "Red", "Otro"] %}
+        <label class="option-item">
+            <input type="radio"
+                   name="tipo_problema"
+                   value="{{ p }}"
+                   {% if ticket and ticket.tipo_problema == p %}checked{% endif %}
+                   required>
+            <span>{{ p }}</span>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+<div class="form-section">
+    <label class="section-title">Fuente del ticket</label>
+    <div class="option-grid">
+        {% for f in ["Llamada", "Correo", "WebChat", "Presencial"] %}
+        <label class="option-item">
+            <input type="checkbox"
+                   name="fuente_ticket"
+                   value="{{ f }}"
+                   {% if ticket and f in (ticket.fuente_ticket or "") %}checked{% endif %}>
+            <span>{{ f }}</span>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+<div class="form-section">
+    <label class="section-title">Estado</label>
+    <div class="option-grid">
+        {% for e in ["Nuevo", "Apertura", "Resuelto", "Cierre", "Escalada"] %}
+        <label class="option-item">
+            <input type="radio"
+                   name="estado"
+                   value="{{ e }}"
+                   {% if ticket and ticket.estado == e %}checked{% endif %}
+                   required>
+            <span>{{ e }}</span>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+
 
     </form>
 </div>
