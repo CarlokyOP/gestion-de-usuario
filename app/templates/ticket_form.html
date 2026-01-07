@@ -1,88 +1,85 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h2>
-  {% if ticket %}
-    Editar Ticket
-  {% else %}
-    Crear Ticket
-  {% endif %}
-</h2>
 
-<form method="POST">
+<div class="container">
+    <h1>Crear Ticket</h1>
 
-  <!-- TÍTULO -->
-  <label>Título</label>
-  <input type="text" name="title" required
-         value="{{ ticket.title if ticket else '' }}">
+    <form method="POST">
 
-  <!-- DESCRIPCIÓN -->
-  <label>Descripción</label>
-  <textarea name="description" required>{{ ticket.description if ticket else '' }}</textarea>
+        <div class="form-group">
+            <label>Título</label>
+            <input type="text" name="titulo" required>
+        </div>
 
-  <!-- FECHA Y HORA -->
-  <label>Fecha y hora</label>
-  <input type="datetime-local" name="created_at"
-         value="{{ ticket.created_at.strftime('%Y-%m-%dT%H:%M') if ticket and ticket.created_at else '' }}">
+        <div class="form-group">
+            <label>Descripción</label>
+            <textarea name="descripcion" rows="4"></textarea>
+        </div>
 
-  <!-- ESTADO -->
-  <label>Estado</label>
-  <select name="status" required>
-    {% set estados = ['Nuevo', 'Abierto', 'En Proceso', 'En Espera', 'Cerrado'] %}
-    {% for estado in estados %}
-      <option value="{{ estado }}"
-        {% if ticket and ticket.status == estado %}selected{% endif %}>
-        {{ estado }}
-      </option>
-    {% endfor %}
-  </select>
+        <!-- Fecha y hora -->
+        <div class="form-row">
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" name="fecha">
+            </div>
 
-  <!-- PRIORIDAD -->
-  <label>Prioridad</label>
-  <select name="priority" required>
-    {% set prioridades = ['Baja', 'Media', 'Alta', 'Crítica'] %}
-    {% for p in prioridades %}
-      <option value="{{ p }}"
-        {% if ticket and ticket.priority == p %}selected{% endif %}>
-        {{ p }}
-      </option>
-    {% endfor %}
-  </select>
+            <div class="form-group">
+                <label>Hora</label>
+                <input type="time" name="hora">
+            </div>
+        </div>
 
-  <!-- FUENTE (NO PUNTITOS) -->
-  <label>Fuente del ticket</label>
-  <select name="source" required>
-    {% set fuentes = ['Correo', 'Teléfono', 'Presencial', 'Sistema'] %}
-    {% for f in fuentes %}
-      <option value="{{ f }}"
-        {% if ticket and ticket.source == f %}selected{% endif %}>
-        {{ f }}
-      </option>
-    {% endfor %}
-  </select>
+        <div class="form-group">
+            <label>Estado</label>
+            <select name="estado">
+                <option value="Nuevo">Nuevo</option>
+                <option value="Apertura">Apertura</option>
+                <option value="Resuelto">Resuelto</option>
+                <option value="Cierre">Cierre</option>
+                <option value="Escalado">Escalado</option>
+            </select>
+        </div>
 
-  <!-- TÉCNICO -->
-  <label>Técnico a cargo</label>
-  <input type="text" name="technician"
-         value="{{ ticket.technician if ticket else '' }}">
+        <div class="form-group">
+            <label>Prioridad</label>
+            <select name="prioridad">
+                <option value="Baja">Baja</option>
+                <option value="Media">Media</option>
+                <option value="Alta">Alta</option>
+            </select>
+        </div>
 
-  <!-- MEDIDAS ADOPTADAS -->
-  <label>Medidas adoptadas</label>
-  <textarea name="actions_taken">{{ ticket.actions_taken if ticket else '' }}</textarea>
+        <div class="form-group">
+            <label>Fuente del ticket</label>
+            <select name="fuente_ticket">
+                <option value="Llamada">Llamada</option>
+                <option value="Correo">Correo</option>
+                <option value="WebChat">WebChat</option>
+                <option value="Presencial">Presencial</option>
+            </select>
+        </div>
 
-  <!-- RESOLUCIÓN -->
-  <label>Resolución</label>
-  <textarea name="resolution">{{ ticket.resolution if ticket else '' }}</textarea>
+        <div class="form-group">
+            <label>Técnico a cargo</label>
+            <input type="text" name="tecnico_a_cargo">
+        </div>
 
-  <br><br>
+        <div class="form-group">
+            <label>Medidas adoptadas</label>
+            <textarea name="medidas_adoptadas" class="textarea-large"></textarea>
+        </div>
 
-  <button type="submit">
-    {% if ticket %}Guardar cambios{% else %}Crear ticket{% endif %}
-  </button>
+        <div class="form-group">
+            <label>Resolución</label>
+            <textarea name="resolucion" class="textarea-large"></textarea>
+        </div>
 
-  <a href="{{ url_for('ticket.list_tickets') }}">
-    <button type="button">⬅ Volver</button>
-  </a>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Crear ticket</button>
+            <a href="{{ url_for('ticket.list_tickets') }}" class="btn-secondary">← Volver</a>
+        </div>
 
-</form>
+    </form>
+</div>
+
 {% endblock %}
