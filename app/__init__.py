@@ -1,15 +1,13 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 import os
-
-db = SQLAlchemy()
+from flask import Flask
+from app.database import db
 
 def create_app():
     app = Flask(__name__)
 
-    # =============================
+    # =========================
     # CONFIGURACIÓN BASE DE DATOS
-    # =============================
+    # =========================
     database_url = os.environ.get("DATABASE_URL")
 
     if database_url:
@@ -25,17 +23,16 @@ def create_app():
 
     db.init_app(app)
 
-    # =============================
-    # MODELOS
-    # =============================
+    # =========================
+    # CREAR TABLAS
+    # =========================
     from app.models.ticket import Ticket
-
     with app.app_context():
         db.create_all()
 
-    # =============================
+    # =========================
     # BLUEPRINTS
-    # =============================
+    # =========================
     from app.routes.ticket import ticket_bp
     app.register_blueprint(ticket_bp, url_prefix="/tickets")
 
