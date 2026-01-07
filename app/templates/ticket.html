@@ -3,73 +3,71 @@
 {% block content %}
 <div class="container">
 
-    <div class="header-row">
-        <h1>Listado de Tickets</h1>
-        <a href="{{ url_for('ticket.create_ticket') }}" class="btn btn-primary">
-            + Crear ticket
-        </a>
-    </div>
+  <div class="header-row">
+    <h1>Listado de Tickets</h1>
+    <a href="{{ url_for('ticket.create_ticket') }}" class="btn btn-primary">
+      + Crear ticket
+    </a>
+  </div>
 
-    {% if tickets %}
-        {% for t in tickets %}
-        <div class="ticket-card
-            {% if t.prioridad == 'Alta' %}ticket-alta
-            {% elif t.prioridad == 'Media' %}ticket-media
-            {% else %}ticket-baja
-            {% endif %}
-        ">
+  {% if tickets %}
+    {% for t in tickets %}
+      <div class="ticket-card
+        {% if t.prioridad == 'Alta' %}ticket-alta
+        {% elif t.prioridad == 'Media' %}ticket-media
+        {% else %}ticket-baja{% endif %}
+      ">
 
-            <div class="ticket-title">
-                {{ t.titulo }}
-            </div>
+        <div class="ticket-title">
+          {{ t.titulo }}
+        </div>
 
-            <div class="ticket-meta">
-                <span><strong>Estado:</strong> {{ t.estado }}</span>
-                <span><strong>Prioridad:</strong> {{ t.prioridad }}</span>
-                <span><strong>Cliente:</strong> {{ t.nombre_cliente }}</span>
-                <span>
-                    <strong>Fecha:</strong>
-                    {{ t.fecha_creacion.strftime("%d-%m-%Y %H:%M") }}
-                </span>
-            </div>
+        <div class="ticket-meta">
+          <span><strong>Estado:</strong> {{ t.estado }}</span>
+          <span><strong>Prioridad:</strong> {{ t.prioridad }}</span>
+          <span><strong>Cliente:</strong> {{ t.nombre_cliente }}</span>
+          <span>
+            <strong>Fecha:</strong>
+            {{ t.fecha_creacion.strftime("%d-%m-%Y %H:%M") }}
+          </span>
+        </div>
 
-            <div class="ticket-actions">
-                <!-- VER -->
-                <a href="{{ url_for('ticket.ticket_detail', ticket_id=t.id) }}"
-                   class="btn btn-view">
-                    Ver
-                </a>
+        <div class="ticket-actions">
 
-                <!-- EDITAR -->
-                <a href="{{ url_for('ticket.edit_ticket', ticket_id=t.id) }}"
-                   class="btn btn-edit">
-                    Editar
-                </a>
+          <a href="{{ url_for('ticket.ticket_detail', ticket_id=t.id) }}"
+             class="btn btn-view">
+            Ver
+          </a>
 
-                <!-- ELIMINAR (POST, correcto) -->
-                <form action="{{ url_for('ticket.delete_ticket', ticket_id=t.id) }}"
-                      method="POST"
-                      style="display:inline;"
-                      onsubmit="return confirm('¿Seguro que deseas eliminar este ticket?');">
+          <a href="{{ url_for('ticket.edit_ticket', ticket_id=t.id) }}"
+             class="btn btn-edit">
+            Editar
+          </a>
 
-                    <button type="submit" class="btn btn-delete">
-                        Eliminar
-                    </button>
-                </form>
-            </div>
+          <!-- ELIMINAR (CORRECTO Y SEGURO) -->
+          <form action="{{ url_for('ticket.delete_ticket', ticket_id=t.id) }}"
+                method="POST"
+                style="display:inline;"
+                onsubmit="return confirm('¿Eliminar este ticket?');">
+
+            <button type="submit" class="btn btn-delete">
+              Eliminar
+            </button>
+          </form>
 
         </div>
-        {% endfor %}
-    {% else %}
-        <p>No hay tickets registrados.</p>
-    {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No hay tickets registrados.</p>
+  {% endif %}
 
 </div>
 
-<!-- 🔁 AUTO REFRESH CADA 10 SEGUNDOS -->
+<!-- AUTO REFRESH (cada 10 segundos) -->
 <script>
-    setTimeout(function () {
-        window.location.reload();
-    }, 10000);
+  setTimeout(() => {
+    window.location.reload();
+  }, 10000);
 </script>
 {% endblock %}
