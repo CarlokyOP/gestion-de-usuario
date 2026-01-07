@@ -426,6 +426,57 @@ form {
         transform: scale(1.2);
     }
 }
+/* ===== SECCIONES ===== */
+.form-section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #9fd3ff;
+}
+
+/* ===== GRID RESPONSIVE ===== */
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+/* ===== ITEMS ===== */
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.option-item:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+.option-item input {
+    accent-color: #2da8ff;
+    transform: scale(1.1);
+}
+
+.option-item span {
+    font-size: 14px;
+}
+
+/* ===== MOBILE AJUSTE ===== */
+@media (max-width: 600px) {
+    .option-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 
 
 
