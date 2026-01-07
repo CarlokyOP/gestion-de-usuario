@@ -30,24 +30,16 @@
                       required>{{ ticket.descripcion if ticket else '' }}</textarea>
         </div>
 
-        <!-- ESTADO -->
+        <!-- ESTADO (SELECT) -->
         <div class="form-group">
             <label>Estado</label>
-
-            {% set estados = ['Nuevo', 'Apertura', 'Resuelto', 'Cierre', 'Escalado'] %}
-            {% set estado_actual = ticket.estado if ticket else 'Nuevo' %}
-
-            <div class="estado-group">
-                {% for e in estados %}
-                <label>
-                    <input type="radio"
-                           name="estado"
-                           value="{{ e }}"
-                           {% if e == estado_actual %}checked{% endif %}>
-                    {{ e }}
-                </label>
-                {% endfor %}
-            </div>
+            <select name="estado" class="form-control" required>
+                <option value="Nuevo" {% if ticket and ticket.estado == 'Nuevo' %}selected{% endif %}>Nuevo</option>
+                <option value="Apertura" {% if ticket and ticket.estado == 'Apertura' %}selected{% endif %}>Apertura</option>
+                <option value="Resuelto" {% if ticket and ticket.estado == 'Resuelto' %}selected{% endif %}>Resuelto</option>
+                <option value="Cierre" {% if ticket and ticket.estado == 'Cierre' %}selected{% endif %}>Cierre</option>
+                <option value="Escalado" {% if ticket and ticket.estado == 'Escalado' %}selected{% endif %}>Escalado</option>
+            </select>
         </div>
 
         <!-- PRIORIDAD -->
