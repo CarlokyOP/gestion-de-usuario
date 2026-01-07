@@ -476,6 +476,26 @@ form {
         grid-template-columns: 1fr 1fr;
     }
 }
+/* ===== FIX MOBILE RADIO / CHECKBOX ===== */
+
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* En móvil forzamos 2 columnas */
+@media (max-width: 600px) {
+    .option-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 
 
