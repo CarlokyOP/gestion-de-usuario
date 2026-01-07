@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from datetime import datetime
 
 from app.database import db
@@ -22,7 +22,8 @@ def list_tickets():
 @ticket_bp.route("/create", methods=["GET", "POST"])
 def create_ticket():
     if request.method == "POST":
-        # Fecha y hora editable
+
+        # Fecha y hora
         fecha_str = request.form.get("fecha")
         hora_str = request.form.get("hora")
 
@@ -37,16 +38,20 @@ def create_ticket():
         fuentes = request.form.getlist("fuente_ticket")
         fuente_ticket = ", ".join(fuentes)
 
+        titulo = request.form.get("titulo")
+        if not titulo:
+            abort(400)
+
         ticket = Ticket(
-            titulo=request.form["titulo"],
-            descripcion=request.form["descripcion"],
+            titulo=titulo,
+            descripcion=request.form.get("descripcion"),
             fecha_creacion=fecha_creacion,
-            estado=request.form["estado"],
-            prioridad=request.form["prioridad"],
-            nombre_cliente=request.form["nombre_cliente"],
-            telefono_cliente=request.form["telefono_cliente"],
-            correo_cliente=request.form["correo_cliente"],
-            tipo_problema=request.form["tipo_problema"],
+            estado=request.form.get("estado", "Nuevo"),
+            prioridad=request.form.get("prioridad", "Baja"),
+            nombre_cliente=request.form.get("nombre_cliente"),
+            telefono_cliente=request.form.get("telefono_cliente"),
+            correo_cliente=request.form.get("correo_cliente"),
+            tipo_problema=request.form.get("tipo_problema"),
             fuente_ticket=fuente_ticket,
 
             # Nuevos campos
@@ -79,6 +84,7 @@ def edit_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
 
     if request.method == "POST":
+
         fecha_str = request.form.get("fecha")
         hora_str = request.form.get("hora")
 
@@ -87,19 +93,18 @@ def edit_ticket(ticket_id):
                 f"{fecha_str} {hora_str}", "%Y-%m-%d %H:%M"
             )
 
-        ticket.titulo = request.form["titulo"]
-        ticket.descripcion = request.form["descripcion"]
-        ticket.estado = request.form["estado"]
-        ticket.prioridad = request.form["prioridad"]
-        ticket.nombre_cliente = request.form["nombre_cliente"]
-        ticket.telefono_cliente = request.form["telefono_cliente"]
-        ticket.correo_cliente = request.form["correo_cliente"]
-        ticket.tipo_problema = request.form["tipo_problema"]
+        ticket.titulo = request.form.get("titulo")
+        ticket.descripcion = request.form.get("descripcion")
+        ticket.estado = request.form.get("estado")
+        ticket.prioridad = request.form.get("prioridad")
+        ticket.nombre_cliente = request.form.get("nombre_cliente")
+        ticket.telefono_cliente = request.form.get("telefono_cliente")
+        ticket.correo_cliente = request.form.get("correo_cliente")
+        ticket.tipo_problema = request.form.get("tipo_problema")
 
         fuentes = request.form.getlist("fuente_ticket")
         ticket.fuente_ticket = ", ".join(fuentes)
 
-        # Nuevos campos
         ticket.medidas_adoptadas = request.form.get("medidas_adoptadas")
         ticket.resolucion = request.form.get("resolucion")
         ticket.tecnico_a_cargo = request.form.get("tecnico_a_cargo")
