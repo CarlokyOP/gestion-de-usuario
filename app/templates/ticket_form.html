@@ -2,97 +2,77 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="title">
-        {% if ticket %}Editar Ticket{% else %}Nuevo Ticket{% endif %}
-    </h1>
+    <h1>Nuevo Ticket</h1>
 
     <form method="POST">
-
         <!-- Título -->
         <label>Título</label>
-        <input type="text" name="titulo" required
-               value="{{ ticket.titulo if ticket else '' }}">
+        <input type="text" name="titulo" required>
 
         <!-- Descripción -->
         <label>Descripción</label>
-        <textarea name="descripcion" required>{{ ticket.descripcion if ticket else '' }}</textarea>
+        <textarea name="descripcion" required></textarea>
 
         <!-- Fecha y hora -->
         <label>Fecha y hora</label>
         <div style="display:flex; gap:10px;">
-            <input type="date" name="fecha" required
-                   value="{{ ticket.fecha_creacion.strftime('%Y-%m-%d') if ticket else '' }}">
-            <input type="time" name="hora" required
-                   value="{{ ticket.fecha_creacion.strftime('%H:%M') if ticket else '' }}">
+            <input type="date" name="fecha" required>
+            <input type="time" name="hora" required>
         </div>
 
         <!-- Estado -->
         <label>Estado</label>
         <select name="estado" required>
-            {% for e in ['Nuevo','Apertura','Resuelto','Cierre','Escalado'] %}
-            <option value="{{ e }}"
-                {% if ticket and ticket.estado == e %}selected{% endif %}>
-                {{ e }}
-            </option>
-            {% endfor %}
+            <option value="Nuevo">Nuevo</option>
+            <option value="Apertura">Apertura</option>
+            <option value="Resuelto">Resuelto</option>
+            <option value="Cierre">Cierre</option>
+            <option value="Escalado">Escalado</option>
         </select>
 
         <!-- Prioridad -->
         <label>Prioridad</label>
         <select name="prioridad" required>
-            {% for p in ['Baja','Media','Alta'] %}
-            <option value="{{ p }}"
-                {% if ticket and ticket.prioridad == p %}selected{% endif %}>
-                {{ p }}
-            </option>
-            {% endfor %}
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
         </select>
 
         <!-- Cliente -->
         <label>Nombre del cliente</label>
-        <input type="text" name="nombre_cliente" required
-               value="{{ ticket.nombre_cliente if ticket else '' }}">
+        <input type="text" name="nombre_cliente" required>
 
         <label>Teléfono</label>
-        <input type="text" name="telefono_cliente" required
-               value="{{ ticket.telefono_cliente if ticket else '' }}">
+        <input type="text" name="telefono_cliente" required>
 
         <label>Correo electrónico</label>
-        <input type="email" name="correo_cliente" required
-               value="{{ ticket.correo_cliente if ticket else '' }}">
+        <input type="email" name="correo_cliente" required>
 
         <!-- Tipo de problema -->
         <label>Tipo de problema</label>
         <select name="tipo_problema" required>
-            {% for t in ['Hardware','Movil','Red','Otro'] %}
-            <option value="{{ t }}"
-                {% if ticket and ticket.tipo_problema == t %}selected{% endif %}>
-                {{ t }}
-            </option>
-            {% endfor %}
+            <option value="Hardware">Hardware</option>
+            <option value="Movil">Móvil</option>
+            <option value="Red">Red</option>
+            <option value="Otro">Otro</option>
         </select>
 
-        <!-- Fuente del ticket (ESTILO CORRECTO) -->
+        <!-- Fuente del ticket (COMO SELECT, NO PUNTITOS) -->
         <label>Fuente del ticket</label>
         <select name="fuente_ticket" required>
-            {% for f in ['Llamada','Correo','WebChat','Presencial'] %}
-            <option value="{{ f }}"
-                {% if ticket and ticket.fuente_ticket == f %}selected{% endif %}>
-                {{ f }}
-            </option>
-            {% endfor %}
+            <option value="Llamada">Llamada</option>
+            <option value="Correo">Correo</option>
+            <option value="WebChat">WebChat</option>
+            <option value="Presencial">Presencial</option>
         </select>
 
         <!-- Botones -->
-        <div style="margin-top:20px; display:flex; gap:10px;">
-            <button type="submit" class="btn-primary">
-                {% if ticket %}Guardar cambios{% else %}Crear ticket{% endif %}
-            </button>
-            <a href="{{ url_for('ticket.list_tickets') }}" class="btn-secondary">
+        <div style="margin-top:20px;">
+            <button type="submit" class="btn btn-primary">Crear ticket</button>
+            <a href="{{ url_for('ticket.list_tickets') }}" class="btn btn-secondary">
                 ← Volver al listado
             </a>
         </div>
-
     </form>
 </div>
 {% endblock %}
