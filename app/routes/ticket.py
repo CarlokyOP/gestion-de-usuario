@@ -19,8 +19,6 @@ def create_ticket():
         hora = request.form["hora"]
         fecha_creacion = datetime.strptime(f"{fecha} {hora}", "%Y-%m-%d %H:%M")
 
-        fuentes = request.form.getlist("fuente_ticket")
-
         ticket = Ticket(
             titulo=request.form["titulo"],
             descripcion=request.form["descripcion"],
@@ -31,7 +29,7 @@ def create_ticket():
             telefono_cliente=request.form["telefono_cliente"],
             correo_cliente=request.form["correo_cliente"],
             tipo_problema=request.form["tipo_problema"],
-            fuente_ticket=", ".join(fuentes),
+            fuente_ticket=request.form["fuente_ticket"],
         )
 
         db.session.add(ticket)
@@ -60,7 +58,7 @@ def edit_ticket(ticket_id):
         ticket.telefono_cliente = request.form["telefono_cliente"]
         ticket.correo_cliente = request.form["correo_cliente"]
         ticket.tipo_problema = request.form["tipo_problema"]
-        ticket.fuente_ticket = ", ".join(request.form.getlist("fuente_ticket"))
+        ticket.fuente_ticket = request.form["fuente_ticket"]
 
         db.session.commit()
         return redirect(url_for("ticket.list_tickets"))
