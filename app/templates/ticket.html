@@ -47,4 +47,29 @@
                 </a>
 
                 <!-- ELIMINAR (POST, correcto) -->
-                <form action="{{ url_for('ticket.delete_tick
+                <form action="{{ url_for('ticket.delete_ticket', ticket_id=t.id) }}"
+                      method="POST"
+                      style="display:inline;"
+                      onsubmit="return confirm('¿Seguro que deseas eliminar este ticket?');">
+
+                    <button type="submit" class="btn btn-delete">
+                        Eliminar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay tickets registrados.</p>
+    {% endif %}
+
+</div>
+
+<!-- 🔁 AUTO REFRESH CADA 10 SEGUNDOS -->
+<script>
+    setTimeout(function () {
+        window.location.reload();
+    }, 10000);
+</script>
+{% endblock %}
