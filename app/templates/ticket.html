@@ -15,8 +15,10 @@
         <div class="ticket-card
             {% if t.prioridad == 'Alta' %}ticket-alta
             {% elif t.prioridad == 'Media' %}ticket-media
-            {% else %}ticket-baja{% endif %}">
-            
+            {% else %}ticket-baja
+            {% endif %}
+        ">
+
             <div class="ticket-title">
                 {{ t.titulo }}
             </div>
@@ -27,37 +29,22 @@
                 <span><strong>Cliente:</strong> {{ t.nombre_cliente }}</span>
                 <span>
                     <strong>Fecha:</strong>
-                    {{ t.fecha_creacion.strftime('%d-%m-%Y %H:%M') }}
+                    {{ t.fecha_creacion.strftime("%d-%m-%Y %H:%M") }}
                 </span>
             </div>
 
             <div class="ticket-actions">
+                <!-- VER -->
                 <a href="{{ url_for('ticket.ticket_detail', ticket_id=t.id) }}"
                    class="btn btn-view">
                     Ver
                 </a>
 
+                <!-- EDITAR -->
                 <a href="{{ url_for('ticket.edit_ticket', ticket_id=t.id) }}"
                    class="btn btn-edit">
                     Editar
                 </a>
-            </div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <p>No hay tickets creados.</p>
-    {% endif %}
 
-</div>
-
-<!-- ========================= -->
-<!-- AUTO REFRESH AUTOMÁTICO -->
-<!-- ========================= -->
-<script>
-    // Recarga automática cada 10 segundos
-    setTimeout(function () {
-        window.location.reload();
-    }, 10000); // 10000 ms = 10 segundos
-</script>
-
-{% endblock %}
+                <!-- ELIMINAR (POST, correcto) -->
+                <form action="{{ url_for('ticket.delete_tick
