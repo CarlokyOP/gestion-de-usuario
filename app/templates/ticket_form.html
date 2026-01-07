@@ -31,22 +31,37 @@
             </div>
         </div>
 
-        <div class="form-row">
-            <div>
-                <label>Estado</label>
-                <select name="estado">
-                    {% for e in ["Nuevo","En Proceso","Resuelto"] %}
-                    <option value="{{ e }}" {% if ticket and ticket.estado == e %}selected{% endif %}>{{ e }}</option>
-                    {% endfor %}
-                </select>
+        <div class="form-section">
+            <label class="section-title">Estado</label>
+            <div class="option-grid">
+                {% for e in ["Nuevo", "Apertura", "Resuelto", "Cierre", "Otros"] %}
+                <label class="option-item">
+                    <input type="radio"
+                           name="estado"
+                           value="{{ e }}"
+                           {% if ticket and ticket.estado == e %}checked{% endif %}
+                           {% if not ticket and e == "Nuevo" %}checked{% endif %}
+                           required>
+                    <span>{{ e }}</span>
+                </label>
+                {% endfor %}
             </div>
-            <div>
-                <label>Prioridad</label>
-                <select name="prioridad">
-                    {% for p in ["Baja","Media","Alta"] %}
-                    <option value="{{ p }}" {% if ticket and ticket.prioridad == p %}selected{% endif %}>{{ p }}</option>
-                    {% endfor %}
-                </select>
+        </div>
+
+        <div class="form-section">
+            <label class="section-title">Prioridad</label>
+            <div class="option-grid">
+                {% for p in ["Baja", "Media", "Alta"] %}
+                <label class="option-item">
+                    <input type="radio"
+                           name="prioridad"
+                           value="{{ p }}"
+                           {% if ticket and ticket.prioridad == p %}checked{% endif %}
+                           {% if not ticket and p == "Baja" %}checked{% endif %}
+                           required>
+                    <span>{{ p }}</span>
+                </label>
+                {% endfor %}
             </div>
         </div>
 
@@ -60,12 +75,12 @@
         <div class="form-row">
             <div>
                 <label>Teléfono</label>
-                <input type="text" name="telefono_cliente"
+                <input type="text" name="telefono_cliente" required
                        value="{{ ticket.telefono_cliente if ticket else '' }}">
             </div>
             <div>
                 <label>Correo</label>
-                <input type="email" name="correo_cliente"
+                <input type="email" name="correo_cliente" required
                        value="{{ ticket.correo_cliente if ticket else '' }}">
             </div>
         </div>
@@ -73,30 +88,36 @@
         <!-- ================= CLASIFICACIÓN ================= -->
         <h2 class="section-title">Clasificación</h2>
 
-        <label>Tipo de problema</label>
-<div class="checkbox-group">
-    {% for p in ["Hardware", "Software", "Red", "Otro"] %}
-    <label class="checkbox-item">
-        <input type="radio" name="tipo_problema" value="{{ p }}"
-        {% if ticket and ticket.tipo_problema == p %}checked{% endif %}>
-        {{ p }}
-    </label>
-    {% endfor %}
-</div>
+        <div class="form-section">
+            <label class="section-title">Tipo de problema</label>
+            <div class="option-grid">
+                {% for p in ["Hardware", "Software", "Red", "Otro"] %}
+                <label class="option-item">
+                    <input type="radio"
+                           name="tipo_problema"
+                           value="{{ p }}"
+                           {% if ticket and ticket.tipo_problema == p %}checked{% endif %}
+                           required>
+                    <span>{{ p }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
 
-
-
-        <label>Fuente del ticket</label>
-<div class="checkbox-group">
-    {% for f in ["Llamada", "Correo", "WebChat", "Presencial"] %}
-    <label class="checkbox-item">
-        <input type="checkbox" name="fuente_ticket" value="{{ f }}"
-        {% if ticket and f in (ticket.fuente_ticket or "") %}checked{% endif %}>
-        {{ f }}
-    </label>
-    {% endfor %}
-</div>
-
+        <div class="form-section">
+            <label class="section-title">Fuente del ticket</label>
+            <div class="option-grid">
+                {% for f in ["Llamada", "Correo", "WebChat", "Presencial"] %}
+                <label class="option-item">
+                    <input type="checkbox"
+                           name="fuente_ticket"
+                           value="{{ f }}"
+                           {% if ticket and f in (ticket.fuente_ticket or "") %}checked{% endif %}>
+                    <span>{{ f }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
 
         <!-- ================= SOPORTE ================= -->
         <h2 class="section-title">Soporte técnico</h2>
@@ -118,54 +139,6 @@
             </button>
             <a href="{{ url_for('ticket.list_tickets') }}" class="btn-secondary">Volver</a>
         </div>
-        <div class="form-section">
-    <label class="section-title">Tipo de problema</label>
-    <div class="option-grid">
-        {% for p in ["Hardware", "Software", "Red", "Otro"] %}
-        <label class="option-item">
-            <input type="radio"
-                   name="tipo_problema"
-                   value="{{ p }}"
-                   {% if ticket and ticket.tipo_problema == p %}checked{% endif %}
-                   required>
-            <span>{{ p }}</span>
-        </label>
-        {% endfor %}
-    </div>
-</div>
-<div class="form-section">
-    <label class="section-title">Fuente del ticket</label>
-    <div class="option-grid">
-        {% for f in ["Llamada", "Correo", "WebChat", "Presencial"] %}
-        <label class="option-item">
-            <input type="checkbox"
-                   name="fuente_ticket"
-                   value="{{ f }}"
-                   {% if ticket and f in (ticket.fuente_ticket or "") %}checked{% endif %}>
-            <span>{{ f }}</span>
-        </label>
-        {% endfor %}
-    </div>
-</div>
-<div class="form-section">
-    <label class="section-title">Estado</label>
-    <div class="option-grid">
-        {% for e in ["Nuevo", "Apertura", "En proceso", "Resuelto", "Cierre", "Escalada"] %}
-        <label class="option-item">
-            <input type="radio"
-                   name="estado"
-                   value="{{ e }}"
-                   {% if ticket and ticket.estado == e %}checked{% endif %}
-                   required>
-            <span>{{ e }}</span>
-        </label>
-        {% endfor %}
-    </div>
-</div>
-
-
-    
-
 
     </form>
 </div>
