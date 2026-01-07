@@ -334,3 +334,53 @@ form {
     border-radius: 4px;
     text-decoration: none;
 }
+.form-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.form-title {
+    color: #4fc3f7;
+    margin-bottom: 20px;
+}
+
+.ticket-form label {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.ticket-form input,
+.ticket-form textarea,
+.ticket-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    background: #0b1d3a;
+    border: 1px solid #2c4c7c;
+    color: #fff;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
