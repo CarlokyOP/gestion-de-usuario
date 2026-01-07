@@ -150,7 +150,7 @@
 <div class="form-section">
     <label class="section-title">Estado</label>
     <div class="option-grid">
-        {% for e in ["Nuevo", "Apertura", "Resuelto", "Cierre", "Escalada"] %}
+        {% for e in ["Nuevo", "Apertura", "En proceso", "Resuelto", "Cierre", "Escalada"] %}
         <label class="option-item">
             <input type="radio"
                    name="estado"
@@ -162,6 +162,9 @@
         {% endfor %}
     </div>
 </div>
+
+
+    
 
 
     </form>
