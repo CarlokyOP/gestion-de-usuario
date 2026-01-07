@@ -16,20 +16,28 @@ def list_tickets():
 def create_ticket():
     if request.method == 'POST':
 
-        fecha = request.form.get('fecha_creacion')
-        fecha = datetime.fromisoformat(fecha) if fecha else datetime.utcnow()
+        fecha = request.form.get('fecha')
+        hora = request.form.get('hora')
+
+        if fecha and hora:
+            fecha_creacion = datetime.strptime(f"{fecha} {hora}", "%Y-%m-%d %H:%M")
+        else:
+            fecha_creacion = datetime.utcnow()
+
+        fuente = request.form.getlist('fuente_ticket')
+        fuente = fuente[-1] if fuente else 'Llamada telefónica'
 
         ticket = Ticket(
             titulo=request.form['titulo'],
             descripcion=request.form['descripcion'],
             estado=request.form['estado'],
             prioridad=request.form['prioridad'],
-            fecha_creacion=fecha,
+            fecha_creacion=fecha_creacion,
             nombre_cliente=request.form['nombre_cliente'],
             telefono_cliente=request.form['telefono_cliente'],
             correo_cliente=request.form['correo_cliente'],
             tipo_problema=request.form['tipo_problema'],
-            fuente_ticket=request.form['fuente_ticket']
+            fuente_ticket=fuente
         )
 
         db.session.add(ticket)
@@ -45,8 +53,14 @@ def edit_ticket(ticket_id):
 
     if request.method == 'POST':
 
-        fecha = request.form.get('fecha_creacion')
-        ticket.fecha_creacion = datetime.fromisoformat(fecha) if fecha else ticket.fecha_creacion
+        fecha = request.form.get('fecha')
+        hora = request.form.get('hora')
+
+        if fecha and hora:
+            ticket.fecha_creacion = datetime.strptime(f"{fecha} {hora}", "%Y-%m-%d %H:%M")
+
+        fuente = request.form.getlist('fuente_ticket')
+        ticket.fuente_ticket = fuente[-1] if fuente else ticket.fuente_ticket
 
         ticket.titulo = request.form['titulo']
         ticket.descripcion = request.form['descripcion']
@@ -56,10 +70,8 @@ def edit_ticket(ticket_id):
         ticket.telefono_cliente = request.form['telefono_cliente']
         ticket.correo_cliente = request.form['correo_cliente']
         ticket.tipo_problema = request.form['tipo_problema']
-        ticket.fuente_ticket = request.form['fuente_ticket']
 
         db.session.commit()
         return redirect(url_for('ticket.list_tickets'))
 
     return render_template('ticket_form.html', ticket=ticket)
-
