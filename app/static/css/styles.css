@@ -391,6 +391,42 @@ form {
     display: flex;
     gap: 15px;
 }
+/* ===============================
+   CHECKBOX / RADIO – MOBILE FIX
+================================ */
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin-top: 8px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+/* 🔹 MOBILE */
+@media (max-width: 768px) {
+    .checkbox-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .checkbox-item {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .checkbox-item input {
+        transform: scale(1.2);
+    }
+}
+
 
 
 
