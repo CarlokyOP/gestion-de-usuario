@@ -11,7 +11,7 @@
 <div class="container">
     <div class="header-row">
         <h1>Listado de Tickets</h1>
-        <a href="{{ url_for('ticket_bp.create_ticket') }}" class="btn-primary">
+        <a href="{{ url_for('ticket.create_ticket') }}" class="btn-primary">
             + Crear ticket
         </a>
     </div>
@@ -42,14 +42,14 @@
                 </div>
 
                 <div class="ticket-actions">
-                    <a href="{{ url_for('ticket_bp.ticket_detail', ticket_id=t.id) }}"
+                    <a href="{{ url_for('ticket.ticket_detail', ticket_id=t.id) }}"
                        class="btn btn-view">Ver</a>
 
-                    <a href="{{ url_for('ticket_bp.edit_ticket', ticket_id=t.id) }}"
+                    <a href="{{ url_for('ticket.edit_ticket', ticket_id=t.id) }}"
                        class="btn btn-edit">Editar</a>
 
                     <form method="POST"
-                          action="{{ url_for('ticket_bp.delete_ticket', ticket_id=t.id) }}"
+                          action="{{ url_for('ticket.delete_ticket', ticket_id=t.id) }}"
                           style="display:inline;"
                           onsubmit="return confirm('¿Eliminar este ticket?');">
                         <button type="submit" class="btn btn-delete">Eliminar</button>
