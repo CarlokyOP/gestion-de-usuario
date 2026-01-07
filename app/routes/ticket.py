@@ -2,7 +2,6 @@
 def create_ticket():
     if request.method == "POST":
 
-        # Fecha y hora
         fecha_str = request.form.get("fecha")
         hora_str = request.form.get("hora")
 
@@ -13,24 +12,20 @@ def create_ticket():
         else:
             fecha_creacion = datetime.utcnow()
 
-        # Fuente del ticket (checkbox múltiple)
+        # Fuente del ticket
         fuentes = request.form.getlist("fuente_ticket")
         fuente_ticket = ", ".join(fuentes)
 
-        # Tipo de problema (RADIO → solo uno)
+        # Tipo de problema (radio → uno solo)
         tipo_problema = request.form.get("tipo_problema")
 
         ticket = Ticket(
             titulo=request.form.get("titulo"),
             descripcion=request.form.get("descripcion"),
             fecha_creacion=fecha_creacion,
-
-            # 🔥 AQUÍ SÍ SE GUARDA EL ESTADO REAL
             estado=request.form.get("estado"),
-
             prioridad=request.form.get("prioridad"),
 
-            # Campos obligatorios
             nombre_cliente=request.form.get("nombre_cliente") or "No informado",
             telefono_cliente=request.form.get("telefono_cliente") or "No informado",
             correo_cliente=request.form.get("correo_cliente") or "No informado",
@@ -49,3 +44,4 @@ def create_ticket():
         return redirect(url_for("ticket.list_tickets"))
 
     return render_template("ticket_form.html", ticket=None)
+
