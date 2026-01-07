@@ -74,8 +74,16 @@
         <h2 class="section-title">Clasificación</h2>
 
         <label>Tipo de problema</label>
-        <input type="text" name="tipo_problema"
-               value="{{ ticket.tipo_problema if ticket else '' }}">
+<div class="checkbox-group">
+    {% for p in ["Hardware","Software","Red","Otro"] %}
+    <label class="checkbox-item">
+        <input type="checkbox" name="tipo_problema" value="{{ p }}"
+        {% if ticket and p in (ticket.tipo_problema or '') %}checked{% endif %}>
+        {{ p }}
+    </label>
+    {% endfor %}
+</div>
+
 
         <label>Fuente del ticket</label>
         <div class="checkbox-group">
